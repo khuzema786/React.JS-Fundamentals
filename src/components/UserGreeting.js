@@ -13,7 +13,7 @@ class UserGreeting extends Component {
     
     render() {
 
-        return this.state.isLoggedin && <div>Welcome Khuzema</div> // --- Aprroach 4, Specifically used if you want to return null when certain condition is false
+        return this.state.isLoggedin && <div>Welcome Khuzema</div> // --- Aprroach 4 Short circuit operator, Specifically used if you want to return null when certain condition is false
 
         // ---- Approach 3 ternary conditional operator,  Preferred because can be used inside JSX----
         // return this.state.isLoggedin ? (
