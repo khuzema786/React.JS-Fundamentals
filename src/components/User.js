@@ -5,7 +5,7 @@ class User extends Component {
         return (
             <div>
                 {/* Note: he brackets are used after this.props.name since a function is passed as props */}
-                {this.props.name(false)} 
+                {this.props.render(false)} 
             </div>
         )
     }

@@ -30,6 +30,9 @@ import HoverCounter from './components/HoverCounter'
 import ClickCounterTwo from './components/ClickCounterTwo'
 import HoverCounterTwo from './components/HoverCounterTwo'
 import User from './components/User'
+import CounterRender from './components/CounterRender'
+import { UserProvider } from './components/UserContext'
+import ComponentC from './components/ComponentC'
 
 class App extends Component {
   render() {
@@ -136,10 +139,44 @@ class App extends Component {
         <ClickCounter name="Khuzema" />
         <HoverCounter />
 
-        {/* Render Props */}
+        {/* Render Props --- Note: you can pass props with prop name as render, it wonn't conflict with render class method*/}
+        {/* Render props refer to a technique for sharing code between react components using a prop whose value is a function */}
+        {/* Below is jus a fundamental basic idea of passing functions as props */}
         <ClickCounterTwo />
         <HoverCounterTwo />
-        <User name={(isLoggedIn)=>isLoggedIn ? "Khuzema" : "Guest"} />
+        <User render={(isLoggedIn)=>isLoggedIn ? "Khuzema" : "Guest"} />
+        {/* Below is an actual example of render props concept */}
+        {/* <CounterRender
+          render={(count, incrementCount)=>(
+            <ClickCounterTwo count={count} incrementCount={incrementCount} />
+          )} 
+        />
+        <CounterRender
+          render={(count, incrementCount)=>(
+            <HoverCounterTwo count={count} incrementCount={incrementCount} />
+          )} 
+        /> */}
+        {/* You can also pass props as children to remove render prop name */}
+        <CounterRender>
+          {(count, incrementCount)=>(
+            <ClickCounterTwo count={count} incrementCount={incrementCount} />
+          )}
+        </CounterRender>
+        <CounterRender name="Khuzema">
+          {(count, incrementCount, name)=>(
+            <HoverCounterTwo name={name} count={count} incrementCount={incrementCount} />
+          )}
+        </CounterRender>
+
+        {/* Context --- It provides a way to "pass down the data through the component tree" without having to pass props down "manually at every level" */}
+        {/* In this example we consider a tree with component C at top then E & then F at bottom, We have to pass props to F without passing them into C & E */}
+        {/* 3 Steps in Context ---> 1. Create the context (UserContext.js) ---> 2. Provide the context value ---> 3. Consume the context value */}
+        <UserProvider value="Khuzema">
+          <ComponentC />
+        </UserProvider>
+        
+        {/* Notice the default value being consumed from UserContext.js since Matching provider is not used */}
+        <ComponentC />
 
       </div>
     )
